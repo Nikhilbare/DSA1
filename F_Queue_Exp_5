@@ -1,0 +1,122 @@
+# DSA1
+#include <iostream>
+#include <stdio.h>
+// #include<conio.h>
+#define MAX 5
+
+using namespace std;
+
+int queue[MAX];
+
+void enqueue(int a);
+void dequeue();
+int isfull();
+int isempty();
+void display();
+int rear = -1, front = -1;
+
+int main()
+{
+    int data;
+    char ch;
+    do
+    {
+        cout << "\n1.Insert(enqueue)\n2.Delete(dequeue)\n3.Display\n4.Exit\n\nEnter your choice : ";
+        int choice;
+        cin >> choice;
+        switch (choice)
+        {
+        case 1:
+            cout << "\nEnter data to insert : ";
+            cin >> data;
+            enqueue(data);
+            break;
+
+        case 2:
+            dequeue();
+            break;
+
+        case 3:
+            display();
+            break;
+
+        case 4:
+            exit;
+            break;
+
+        default:
+            cout << "\n!!Enter valid choice!!";
+            break;
+        }
+
+        
+
+    } while (ch !=4);
+}
+
+int isfull()
+{
+    if (((rear + 1) % MAX) == front)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+int isempty()
+{
+    if (rear == -1 && front == -1)
+    {
+        return 1;
+    }
+    else
+    {
+        return 0;
+    }
+}
+
+void enqueue(int a)
+{
+    if (isfull() == 1)
+    {
+        cout << "\nSORRY : Queue full";
+        return;
+    }
+    if (front == -1 && rear == -1)
+    {
+        front++;
+        rear++;
+        queue[rear] = a;
+    }
+    else
+    {
+        rear = (rear + 1) % MAX;
+        queue[rear] = a;
+    }
+}
+
+void dequeue()
+{
+    if (isempty() == 1)
+    {
+        cout << "\nSORRY : Queue Empty ";
+        return;
+    }
+    cout << "\nDeleted element is : " << queue[front];
+    front = (front + 1) % MAX;
+}
+
+void display()
+{
+    int i = front;
+    cout << "front-->";
+    while (i != rear)
+    {
+        cout << "\t\t" << queue[i] << endl;
+        i = (i + 1) % MAX;
+    }
+    cout << "\t\t" << queue[rear] << "<--rear";
+}
